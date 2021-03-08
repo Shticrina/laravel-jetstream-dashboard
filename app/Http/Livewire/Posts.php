@@ -3,11 +3,15 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Post;
 
 class Posts extends Component
 {
-    public $posts, $title, $body, $post_id;
+    use WithPagination;
+
+    public $title, $body, $post_id;
+    protected $posts;
     public $isOpen = 0;
   
     /**
@@ -17,8 +21,11 @@ class Posts extends Component
      */
     public function render()
     {
-        $this->posts = Post::all();
-        return view('livewire.posts.list');
+        $this->posts = Post::latest()->paginate(5);
+
+        return view('livewire.posts.list', [
+            'posts' => $this->posts
+        ]);
     }
   
     /**
@@ -62,30 +69,7 @@ class Posts extends Component
         $this->body = '';
         $this->post_id = '';
     }
-     
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    public function store()
-    {
-        $this->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
-   
-        Post::updateOrCreate(['id' => $this->post_id], [
-            'title' => $this->title,
-            'body' => $this->body
-        ]);
-  
-        session()->flash('message', 
-            $this->post_id ? 'Post Updated Successfully.' : 'Post Created Successfully.');
-  
-        $this->closeModal();
-        $this->resetInputFields();
-    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -106,9 +90,33 @@ class Posts extends Component
      *
      * @var array
      */
+    public function store()
+    {
+        $this->validate([
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+   
+        Post::updateOrCreate(['id' => $this->post_id], [
+            'title' => $this->title,
+            'body' => $this->body
+        ]);
+  
+        session()->flash('message', 
+            $this->post_id ? 'Post successfully updated.' : 'Post successfully created.');
+  
+        $this->closeModal();
+        $this->resetInputFields();
+    }
+     
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public function delete($id)
     {
         Post::find($id)->delete();
-        session()->flash('message', 'Post Deleted Successfully.');
+        session()->flash('message', 'Post successfully deleted.');
     }
 }

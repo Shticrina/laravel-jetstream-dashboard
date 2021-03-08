@@ -4,51 +4,76 @@
     </h2>
 </x-slot>
 
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-            @if (session()->has('message'))
-                <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert">
-                  <div class="flex">
-                    <div>
-                      <p class="text-sm">{{ session('message') }}</p>
-                    </div>
-                  </div>
-                </div>
-            @endif
-
-            <button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create New User</button>
+<div class="overflow-x-auto">
+    <div class="min-w-screen bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
+        <div class="w-full lg:w-5/6">
+            <button wire:click="create()" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-4 mt-7">Create New User</button>
 
             @if($isOpen)
                 @include('livewire.users.create')
             @endif
 
-            <table class="table-fixed w-full">
-                <thead>
-                    <tr class="bg-gray-100">
-                        <th class="px-4 py-2 w-20">No.</th>
-                        <th class="px-4 py-2">Name</th>
-                        <th class="px-4 py-2">Email</th>
-                        <!-- <th class="px-4 py-2">Password</th> -->
-                        <th class="px-4 py-2">Action</th>
-                    </tr>
-                </thead>
+            @if (session()->has('message'))
+                <div class="rounded-b bg-green-100 text-teal-900 px-4 py-3 my-3" role="alert">
+                    <div class="flex">
+                        <p class="text-sm">{{ session('message') }}</p>
+                    </div>
+                </div>
+            @endif
 
-                <tbody>
-                    @foreach($users as $user)
-                    <tr>
-                        <td class="border px-4 py-2">{{ $user->id }}</td>
-                        <td class="border px-4 py-2">{{ $user->name }}</td>
-                        <td class="border px-4 py-2">{{ $user->email }}</td>
-                        <!-- <td class="border px-4 py-2">{{ $user->password }}</td> -->
-                        <td class="border px-4 py-2">
-                        <button wire:click="edit({{ $user->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                            <button wire:click="delete({{ $user->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="bg-white overflow-hidden shadow-xl rounded">
+                <table class="table-fixed w-full">
+                    <thead>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left w-32">ID</th>
+                            <th class="py-3 px-6 text-left">Name</th>
+                            <th class="py-3 px-6 text-center">Email</th>
+                            <th class="py-3 px-6 text-center">Role</th>
+                            <th class="py-3 px-6 text-center w-56">Created at</th>
+                            <th class="py-3 px-6 text-center w-48">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-gray-600 text-sm font-light">
+                        @foreach($users as $user)
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">{{ $user->id }}</td>
+                                <td class="py-3 px-6">
+                                    <div class="flex items-center">
+                                        <div class="mr-2">
+                                            <img class="w-6 h-6 rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg"/>
+                                        </div>
+
+                                        <span>{{ $user->name }}</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-center">{{ $user->email }}</td>
+                                <td class="py-3 px-6 text-center">
+                                    <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">member</span>
+                                </td>
+                                <td class="py-3 px-6 text-center">{{ $user->created_at->format('d M Y') }}</td>
+                                <td class="py-3 px-6 text-center">
+                                    <div class="flex item-center justify-center">
+                                        <button wire:click="edit({{ $user->id }})" class="text-gray-500 hover:text-gray-700 text-white font-bold p-2 rounded">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+
+                                        <button wire:click="edit({{ $user->id }})" class="text-gray-500 hover:text-gray-700 text-white font-bold p-2 rounded">
+                                            <i class="far fa-edit"></i>
+                                        </button>
+
+                                        <button wire:click="delete({{ $user->id }})" class="text-gray-500 hover:text-gray-700 text-white font-bold p-2 rounded"><i class="far fa-trash-alt"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <div class="p-5">
+                    {{ $users->links() }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

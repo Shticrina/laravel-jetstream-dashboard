@@ -3,11 +3,15 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\User;
 
 class Users extends Component
 {
-    public $users, $username, $email, $password, $user_id;
+    use WithPagination;
+    
+    public $username, $email, $password, $user_id;
+    protected $users;
     public $isOpen = 0;
   
     /**
@@ -17,8 +21,11 @@ class Users extends Component
      */
     public function render()
     {
-        $this->users = User::all();
-        return view('livewire.users.list');
+        $this->users = User::latest()->paginate(5);
+        
+        return view('livewire.users.list', [
+            'users' => $this->users
+        ]);
     }
   
     /**
@@ -84,7 +91,7 @@ class Users extends Component
         ]);
   
         session()->flash('message', 
-            $this->user_id ? 'User Updated Successfully.' : 'User Created Successfully.');
+            $this->user_id ? 'User successfully updated.' : 'User successfully created.');
   
         $this->closeModal();
         $this->resetInputFields();
@@ -114,6 +121,6 @@ class Users extends Component
     public function delete($id)
     {
         User::find($id)->delete();
-        session()->flash('message', 'User Deleted Successfully.');
+        session()->flash('message', 'User successfully deleted.');
     }
 }

@@ -4,49 +4,66 @@
     </h2>
 </x-slot>
 
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-            @if (session()->has('message'))
-                <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert">
-                  <div class="flex">
-                    <div>
-                      <p class="text-sm">{{ session('message') }}</p>
-                    </div>
-                  </div>
-                </div>
-            @endif
-
-            <button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create New Post</button>
+<div class="overflow-x-auto">
+    <div class="min-w-screen bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
+        <div class="w-full lg:w-5/6">
+            <div class="flex flex-wrap content-end">
+                <button wire:click="create()" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-4 mt-7">Create New Post</button>
+            </div>
 
             @if($isOpen)
                 @include('livewire.posts.create')
             @endif
 
-            <table class="table-fixed w-full">
-                <thead>
-                    <tr class="bg-gray-100">
-                        <th class="px-4 py-2 w-20">No.</th>
-                        <th class="px-4 py-2">Title</th>
-                        <th class="px-4 py-2">Body</th>
-                        <th class="px-4 py-2">Action</th>
-                    </tr>
-                </thead>
+            @if (session()->has('message'))
+                <div class="rounded-b bg-green-100 text-teal-900 px-4 py-3 my-3" role="alert">
+                    <div class="flex">
+                        <p class="text-sm">{{ session('message') }}</p>
+                    </div>
+                </div>
+            @endif
+        
+            <div class="bg-white overflow-hidden shadow-xl rounded">
+                <table class="table-fixed w-full">
+                    <thead>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left w-32">ID</th>
+                            <th class="py-3 px-6 text-left">Title</th>
+                            <th class="py-3 px-6 text-center">Body</th>
+                            <th class="py-3 px-6 text-center w-56">Created at</th>
+                            <th class="py-3 px-6 text-center w-48">Action</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    @foreach($posts as $post)
-                    <tr>
-                        <td class="border px-4 py-2">{{ $post->id }}</td>
-                        <td class="border px-4 py-2">{{ $post->title }}</td>
-                        <td class="border px-4 py-2">{{ $post->body }}</td>
-                        <td class="border px-4 py-2">
-                        <button wire:click="edit({{ $post->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                            <button wire:click="delete({{ $post->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    <tbody class="text-gray-600 text-sm font-light">
+                        @foreach($posts as $post)
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">{{ $post->id }}</td>
+                                <td class="py-3 px-6 text-left">{{ $post->title }}</td>
+                                <td class="py-3 px-6 text-center">{{ $post->body }}</td>
+                                <td class="py-3 px-6 text-center">{{ $post->created_at->format('d M Y') }}</td>
+                                <td class="py-3 px-6 text-center">
+                                    <div class="flex item-center justify-center">
+                                        <button wire:click="edit({{ $post->id }})" class="text-gray-500 hover:text-gray-700 text-white font-bold p-2 rounded">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+
+                                        <button wire:click="edit({{ $post->id }})" class="text-gray-500 hover:text-gray-700 text-white font-bold p-2 rounded">
+                                            <i class="far fa-edit"></i>
+                                        </button>
+
+                                        <button wire:click="delete({{ $post->id }})" class="text-gray-500 hover:text-gray-700 text-white font-bold p-2 rounded"><i class="far fa-trash-alt"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <div class="p-5">
+                    {{ $posts->links() }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

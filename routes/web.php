@@ -18,7 +18,7 @@ use App\Http\Livewire\Users;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('posts', Posts::class)->name('posts');
 Route::get('todos', Todos::class)->name('todos');

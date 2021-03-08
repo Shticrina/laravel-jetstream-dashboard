@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Font awesome -->
+        <script src="https://kit.fontawesome.com/2d566fa444.js" crossorigin="anonymous"></script>
+
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 

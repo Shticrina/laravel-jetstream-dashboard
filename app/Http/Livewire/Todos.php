@@ -3,11 +3,15 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Todo;
 
 class Todos extends Component
 {
-    public $todos, $name, $content, $todo_id;
+    use WithPagination;
+
+    public $name, $content, $todo_id;
+    protected $todos;
     public $isOpen = 0;
   
     /**
@@ -17,8 +21,11 @@ class Todos extends Component
      */
     public function render()
     {
-        $this->todos = Todo::all();
-        return view('livewire.todos.list');
+        $this->todos = Todo::latest()->paginate(5);
+
+        return view('livewire.todos.list', [
+            'todos' => $this->todos
+        ]);
     }
   
     /**
@@ -81,7 +88,7 @@ class Todos extends Component
         ]);
   
         session()->flash('message', 
-            $this->todo_id ? 'Todo Updated Successfully.' : 'Todo Created Successfully.');
+            $this->todo_id ? 'Todo successfully updated.' : 'Todo successfully created.');
   
         $this->closeModal();
         $this->resetInputFields();
@@ -109,6 +116,6 @@ class Todos extends Component
     public function delete($id)
     {
         Todo::find($id)->delete();
-        session()->flash('message', 'Todo Deleted Successfully.');
+        session()->flash('message', 'Todo successfully deleted.');
     }
 }
