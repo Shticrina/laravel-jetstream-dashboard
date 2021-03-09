@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Laravel Vue3 Jetstream</title>
 
         <!-- Font awesome -->
         <script src="https://kit.fontawesome.com/2d566fa444.js" crossorigin="anonymous"></script>
@@ -17,10 +17,17 @@
                 font-family: 'Nunito';
             }
         </style>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     </head>
 
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+        <div id="app">
+            <App />
+        </div>
+
+        <!-- <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -35,12 +42,8 @@
                     @endauth
                 </div>
             @endif
+        </div> -->
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <h3>Welcome page</h3>
-                </div>
-            </div>
-        </div>
+        <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
