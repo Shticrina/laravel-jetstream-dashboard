@@ -23,7 +23,7 @@
                 <a href="/login" class="mr-5 text-green-400 hover:text-purple-400 cursor-pointer">Login</a>
                 <a href="/register" class="mr-5 text-green-400 hover:text-purple-400 cursor-pointer">Register</a>
 
-                <!-- <router-link to="/login" class="mr-5 text-green-400 hover:text-purple-400 cursor-pointer">Login</router-link> -->
+                <router-link :to="{ name: 'Login' }" class="mr-5 text-purple-400 hover:text-purple-400 cursor-pointer">Login Vue</router-link>
                 <!-- <router-link to="/register" class="mr-5 text-green-400 hover:text-purple-400 cursor-pointer">Register</router-link> -->
             </div>
         </div>

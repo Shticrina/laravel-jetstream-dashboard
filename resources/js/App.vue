@@ -1,7 +1,7 @@
 <template>
 	<header-component title="rrry"></header-component>
 
-	<main class="p-6">
+	<main class="flex min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
 		<router-view />
 		<!-- <router-view @loggedIn="change"></router-view> -->
 	</main>

@@ -1,6 +1,6 @@
 <template>
 	<div class="p-5">
-		<h2>Products page</h2>
+		<h2>List Todos page</h2>
 	</div>
 </template>
 

@@ -23,4 +23,5 @@ module.exports = {
     },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    // baseUrl: process.env.NODE_ENV === 'production' ? '/subpath/' : '/',
 };

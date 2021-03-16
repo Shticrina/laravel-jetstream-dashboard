@@ -20,10 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('posts', Posts::class)->name('posts');
-Route::get('todos', Todos::class)->name('todos');
-Route::get('users', Users::class)->name('users');
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('posts', Posts::class)->name('posts');
+	Route::get('todos', Todos::class)->name('todos');
+	Route::get('users', Users::class)->name('users');
+});
