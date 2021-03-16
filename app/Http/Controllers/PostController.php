@@ -20,6 +20,8 @@ class PostController extends Controller
 
     public function index()
     {
+        // dd(auth()->check(), auth()->user());
+        
         $posts = Post::with('user')->latest()->get();
         $users = User::has('posts')->with('posts')->get();
 
@@ -34,7 +36,7 @@ class PostController extends Controller
         // validation
 
         // dd(Auth::user()); // null
-        dd(Auth::check(), $request->all()); // null
+        // dd(Auth::check(), $request->all()); // null
 
         $post = new Post([
             'title' => $request->input('title'),
@@ -45,7 +47,9 @@ class PostController extends Controller
 
         $post->save();
 
-        return response()->json('Post successfully created!');
+        return response()->json([
+            'success' => 'Post successfully created!'
+        ]);
     }
 
     public function show($id)

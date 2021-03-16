@@ -17,7 +17,7 @@
                     </div>
                 </div>
 
-                <div class="mt-6" v-if="posts.length" v-for="post in posts" :key="post.id">
+                <div class="mt-6" v-if="posts" v-for="post in posts" :key="post.id">
                     <div class="px-10 py-6 bg-white rounded-lg shadow-md">
                         <div class="flex justify-between items-center">
                         	<span class="font-light text-gray-600">{{ post.created_at }}</span>
@@ -140,6 +140,7 @@
 
 <script>
 	import { ref } from 'vue';
+    import store from '../../store/store';
 
 	export default {
 		// props: ['apple'],
@@ -148,13 +149,16 @@
 		// },
 		data() {
 		    return {
-		      	dee: 'Hello Vue.js!',
+                user: store.getters.user,
+                isLoggedIn: store.getters.isLoggedIn,
 		      	posts: [],
 		      	users: []
 		    }
   		},
   		mounted() {
   			this.getAllPosts();
+            // console.log(this.user);
+            // console.log(this.isLoggedIn); // true, ok
         },
 		/*async setup() {
 			const { posts } = await getAllPosts();
@@ -164,7 +168,7 @@
 		},*/
 		methods: {
 		    async getAllPosts() {
-                console.log(axios.defaults.baseURL); // http://localhost:8000/
+                // console.log(axios.defaults.baseURL); // http://localhost:8000/
                 // console.log(window.location.pathname);
                 // console.log(this.$router.currentRoute.value.path); // /blog
 
@@ -173,7 +177,6 @@
 	            .then(response => {
 	                this.posts = response.data.posts;
 	                this.users = response.data.users;
-	                console.log(response.data);
 	            });
 	    	},
   		},

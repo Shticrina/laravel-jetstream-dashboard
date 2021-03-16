@@ -35,20 +35,17 @@
         },
         methods: {
             addPost() {
-                // console.log(this.post); // ok
+                axios.post('api/posts/', this.post)
+                .then(response => {
+                    // console.log(response);
 
-                // axios.get('/sanctum/csrf-cookie').then(response => {
-                    axios.post('api/posts/', this.post)
-                    .then(response => {
-                        console.log(response);
-
-                        /*if (response.success) {
-                            this.$router.push({name: 'Blog'});
-                        }*/
-                    })
-                    .catch(error => console.log(error))
-                    .finally(() => this.loading = false);
-                // });
+                    if (response.success) {
+                        // show success message in toastr
+                        this.$router.push({name: 'Blog'});
+                    }
+                })
+                .catch(error => console.log(error))
+                .finally(() => this.loading = false);
             }
         }
     }

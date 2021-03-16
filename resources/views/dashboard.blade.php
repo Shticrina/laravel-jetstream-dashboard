@@ -13,3 +13,10 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    const authUser = {!! json_encode(Auth::user()); !!};
+    window.localStorage.auth_user = JSON.stringify(authUser);
+    // console.log(authUser, window.localStorage); // ok
+</script>
+

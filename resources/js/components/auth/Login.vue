@@ -41,6 +41,8 @@
 </template>
 
 <script>
+	import store from '../../store/store';
+
     export default {
         data() {
             return {
@@ -53,9 +55,16 @@
         methods: {
             handleLogin() {
                 axios.get('/sanctum/csrf-cookie').then(response => {
-	                axios.post('/login', this.formData)
+	                // axios.post('/login', this.formData)
+	                store.dispatch('login', this.formData)
 	                .then(response => {
 	                    // console.log(response);
+	                    // store.dispatch('setDefaults', true);
+	                    /*store.commit('setIsLoggedIn', true);
+	                    store.commit('setAuthUser', window.localStorage.auth_user);
+
+	                    console.log(localStorage.getItem('auth_user'));
+*/
 	                    this.$router.push({name: 'Blog'});
 	                })
 	                .catch(error => console.log(error));
